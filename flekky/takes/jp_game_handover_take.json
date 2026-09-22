@@ -1,0 +1,44 @@
+{
+ "format": "haribow-flekky-sampler/1",
+ "audio": "jp_game_handover.mp3",
+ "duration": 3.07,
+ "events": [
+  {
+   "t": -0.44,
+   "id": "appear",
+   "v": 0
+  },
+  {
+   "t": -0.42,
+   "id": "appear",
+   "v": 1
+  },
+  {
+   "t": 0.043,
+   "id": "look",
+   "x": 0.3,
+   "y": 0.0
+  },
+  {
+   "t": 0.043,
+   "id": "scale",
+   "v": 1.06
+  },
+  {
+   "t": 0.443,
+   "id": "gest",
+   "v": "nod"
+  },
+  {
+   "t": 3.177,
+   "id": "look",
+   "x": 0.25,
+   "y": 0.019833296209049372
+  },
+  {
+   "t": 3.177,
+   "id": "scale",
+   "v": 1.02
+  }
+ ]
+}

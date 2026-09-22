@@ -1,0 +1,42 @@
+{
+ "format": "haribow-flekky-subs/1",
+ "voice": "gemini Puck #45（ひと続き）",
+ "note": "gen_game_intro.py がひと続きで合成し、発話の間から行の秒数を割り当てた。手で直さず台本を直して作り直す。",
+ "audio": "jp_game_swap.mp3",
+ "duration": 9.719,
+ "lines": [
+  {
+   "t0": 0.4,
+   "t1": 1.72,
+   "ja": "はい、ここで交代。",
+   "focus": null,
+   "act": [
+    0.0,
+    1.0,
+    "nod"
+   ]
+  },
+  {
+   "t0": 2.28,
+   "t1": 4.6,
+   "ja": "ここからは、\nHARIBOWのメンバーが落とします。",
+   "focus": null,
+   "act": [
+    0.0,
+    1.04,
+    null
+   ]
+  },
+  {
+   "t0": 5.4,
+   "t1": 9.24,
+   "ja": "今回の勇敢なチャレンジャー、\n気をつけて席に戻してあげてください。",
+   "focus": null,
+   "act": [
+    0.2,
+    1.02,
+    null
+   ]
+  }
+ ]
+}

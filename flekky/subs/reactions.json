@@ -1,0 +1,904 @@
+{
+ "pools": {
+  "b4b_hit": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b4b_hit_00.mp3",
+     "ja": "はい、1個。",
+     "dur": 1.42
+    },
+    {
+     "f": "react/b4b_hit_01.mp3",
+     "ja": "入った。",
+     "dur": 1.12
+    },
+    {
+     "f": "react/b4b_hit_02.mp3",
+     "ja": "そう、そこ。",
+     "dur": 1.26
+    },
+    {
+     "f": "react/b4b_hit_03.mp3",
+     "ja": "いいペース。",
+     "dur": 1.621
+    },
+    {
+     "f": "react/b4b_hit_04.mp3",
+     "ja": "続けてください。",
+     "dur": 1.2
+    },
+    {
+     "f": "react/b4b_hit_05.mp3",
+     "ja": "うまいな。",
+     "dur": 1.32
+    },
+    {
+     "f": "react/b4b_hit_06.mp3",
+     "ja": "おー。",
+     "dur": 1.36
+    },
+    {
+     "f": "react/b4b_hit_07.mp3",
+     "ja": "手、慣れてきましたね。",
+     "dur": 1.98
+    },
+    {
+     "f": "react/b4b_hit_08.mp3",
+     "ja": "その角度、正解っす。",
+     "dur": 2.12
+    },
+    {
+     "f": "react/b4b_hit_09.mp3",
+     "ja": "悪くない。",
+     "dur": 1.34
+    },
+    {
+     "f": "react/b4b_hit_10.mp3",
+     "ja": "そうそう。",
+     "dur": 0.82
+    },
+    {
+     "f": "react/b4b_hit_11.mp3",
+     "ja": "もう1個。",
+     "dur": 0.636
+    }
+   ]
+  },
+  "b1_start": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b1_start_00.mp3",
+     "ja": "お、始まった。",
+     "dur": 2.28
+    },
+    {
+     "f": "react/b1_start_01.mp3",
+     "ja": "はい、いきましょ。",
+     "dur": 1.74
+    },
+    {
+     "f": "react/b1_start_02.mp3",
+     "ja": "じゃ、見てます。",
+     "dur": 1.718
+    }
+   ]
+  },
+  "b2_roll": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b2_roll_00.mp3",
+     "ja": "……あー、そこで止まるんだ。",
+     "dur": 3.52
+    },
+    {
+     "f": "react/b2_roll_01.mp3",
+     "ja": "決まりましたね。文句は、ルーレットに。",
+     "dur": 3.72
+    },
+    {
+     "f": "react/b2_roll_02.mp3",
+     "ja": "はい、確定。もう変わんないっす。",
+     "dur": 2.7
+    },
+    {
+     "f": "react/b2_roll_03.mp3",
+     "ja": "その回数で合ってます。たぶん。",
+     "dur": 3.22
+    },
+    {
+     "f": "react/b2_roll_04.mp3",
+     "ja": "引きは、まあ、普通っすね。",
+     "dur": 2.531
+    }
+   ]
+  },
+  "b3_expose": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b3_expose_00.mp3",
+     "ja": "出た。真ん中、狙えます。",
+     "dur": 2.901
+    },
+    {
+     "f": "react/b3_expose_01.mp3",
+     "ja": "開きましたね。ここからが本番。",
+     "dur": 3.34
+    },
+    {
+     "f": "react/b3_expose_02.mp3",
+     "ja": "はい、見えた。あれっす。",
+     "dur": 2.42
+    },
+    {
+     "f": "react/b3_expose_03.mp3",
+     "ja": "あそこ。あの光ってるやつ。",
+     "dur": 2.285
+    }
+   ]
+  },
+  "b4a_first": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b4a_first_00.mp3",
+     "ja": "お、入った。",
+     "dur": 1.18
+    },
+    {
+     "f": "react/b4a_first_01.mp3",
+     "ja": "一発目。ちゃんと入るんだ。",
+     "dur": 2.6
+    },
+    {
+     "f": "react/b4a_first_02.mp3",
+     "ja": "いいっすね、それ。",
+     "dur": 1.534
+    }
+   ],
+   "dropped": true
+  },
+  "b4c_five": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b4c_five_00.mp3",
+     "ja": "あと5回。見えてきた。",
+     "dur": 2.52
+    },
+    {
+     "f": "react/b4c_five_01.mp3",
+     "ja": "もうちょいっす。",
+     "dur": 1.339
+    },
+    {
+     "f": "react/b4c_five_02.mp3",
+     "ja": "ここ、集中してください。",
+     "dur": 2.42
+    },
+    {
+     "f": "react/b4c_five_03.mp3",
+     "ja": "終わりが見えてきましたね。",
+     "dur": 2.072
+    }
+   ]
+  },
+  "b4d_last": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b4d_last_00.mp3",
+     "ja": "あと1回。",
+     "dur": 1.64
+    },
+    {
+     "f": "react/b4d_last_01.mp3",
+     "ja": "次で終わりっす。",
+     "dur": 1.0
+    },
+    {
+     "f": "react/b4d_last_02.mp3",
+     "ja": "……これ、決めたらすごいっすよ。",
+     "dur": 4.297
+    }
+   ]
+  },
+  "b5_split2": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b5_split2_00.mp3",
+     "ja": "うわ、増えた。",
+     "dur": 2.34
+    },
+    {
+     "f": "react/b5_split2_01.mp3",
+     "ja": "割れた。聞いてないっすよ、それ。",
+     "dur": 3.273
+    }
+   ]
+  },
+  "b5_split3": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b5_split3_00.mp3",
+     "ja": "もう1個増えた。多いって。",
+     "dur": 3.72
+    },
+    {
+     "f": "react/b5_split3_01.mp3",
+     "ja": "3つ。さすがにずるいな。",
+     "dur": 4.76
+    }
+   ]
+  },
+  "b5_split4": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b5_split4_00.mp3",
+     "ja": "……知らないっす、これ。",
+     "dur": 2.48
+    },
+    {
+     "f": "react/b5_split4_01.mp3",
+     "ja": "もう何個あるんすか。",
+     "dur": 1.52
+    }
+   ]
+  },
+  "b6_tier1": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b6_tier1_00.mp3",
+     "ja": "乗ってきましたね。",
+     "dur": 1.94
+    },
+    {
+     "f": "react/b6_tier1_01.mp3",
+     "ja": "お、繋がってる。",
+     "dur": 1.626
+    }
+   ]
+  },
+  "b6_tier2": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b6_tier2_00.mp3",
+     "ja": "音、変わったの気づきました?",
+     "dur": 2.1
+    },
+    {
+     "f": "react/b6_tier2_01.mp3",
+     "ja": "熱くなってきた。",
+     "dur": 1.48
+    }
+   ]
+  },
+  "b6_tier3": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b6_tier3_00.mp3",
+     "ja": "やば。止まんないじゃん。",
+     "dur": 2.48
+    },
+    {
+     "f": "react/b6_tier3_01.mp3",
+     "ja": "客席、静かになってますよ。",
+     "dur": 2.513
+    }
+   ]
+  },
+  "b6_tier4": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b6_tier4_00.mp3",
+     "ja": "……えぐいな。",
+     "dur": 1.76
+    },
+    {
+     "f": "react/b6_tier4_01.mp3",
+     "ja": "ちょっと、うますぎません?",
+     "dur": 2.047
+    }
+   ]
+  },
+  "b7_life2": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b7_life2_00.mp3",
+     "ja": "あー。まあ、まだあるんで。",
+     "dur": 2.74
+    },
+    {
+     "f": "react/b7_life2_01.mp3",
+     "ja": "今の、惜しかった。",
+     "dur": 1.72
+    },
+    {
+     "f": "react/b7_life2_02.mp3",
+     "ja": "大丈夫っす、まだ余裕。",
+     "dur": 1.618
+    }
+   ]
+  },
+  "b7_life1": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b7_life1_00.mp3",
+     "ja": "あと1個。ちょっと落ち着いて。",
+     "dur": 2.42
+    },
+    {
+     "f": "react/b7_life1_01.mp3",
+     "ja": "……ここからっすよ。",
+     "dur": 3.38
+    },
+    {
+     "f": "react/b7_life1_02.mp3",
+     "ja": "深呼吸、してください。",
+     "dur": 1.66
+    }
+   ]
+  },
+  "b7_life0": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b7_life0_00.mp3",
+     "ja": "あー、なくなった。",
+     "dur": 2.28
+    },
+    {
+     "f": "react/b7_life0_01.mp3",
+     "ja": "ここからは、時間が減ります。",
+     "dur": 2.96
+    },
+    {
+     "f": "react/b7_life0_02.mp3",
+     "ja": "まだ終わってないっす。",
+     "dur": 1.831
+    }
+   ],
+   "dropped": true
+  },
+  "b7_penalty": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b7_penalty_00.mp3",
+     "ja": "時間、持ってかれた。",
+     "dur": 2.46
+    },
+    {
+     "f": "react/b7_penalty_01.mp3",
+     "ja": "今のは痛いな。",
+     "dur": 1.28
+    },
+    {
+     "f": "react/b7_penalty_02.mp3",
+     "ja": "……見なかったことにしましょ。",
+     "dur": 2.974
+    }
+   ]
+  },
+  "b8_guard": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b8_guard_00.mp3",
+     "ja": "今の、拾いました。",
+     "dur": 1.6
+    },
+    {
+     "f": "react/b8_guard_01.mp3",
+     "ja": "助かったっすね。",
+     "dur": 1.68
+    },
+    {
+     "f": "react/b8_guard_02.mp3",
+     "ja": "1回だけっすよ、それ。",
+     "dur": 1.396
+    }
+   ]
+  },
+  "b9_good": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_good_00.mp3",
+     "ja": "お、当たり。",
+     "dur": 0.8
+    },
+    {
+     "f": "react/b9_good_01.mp3",
+     "ja": "それ、いいやつっす。",
+     "dur": 2.2
+    },
+    {
+     "f": "react/b9_good_02.mp3",
+     "ja": "ラッキー。",
+     "dur": 1.12
+    },
+    {
+     "f": "react/b9_good_03.mp3",
+     "ja": "使ってください、それ。",
+     "dur": 1.049
+    }
+   ],
+   "dropped": true
+  },
+  "b9_E": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_E_00.mp3",
+     "ja": "あ、伸びた。",
+     "dur": 1.768
+    }
+   ],
+   "dropped": true
+  },
+  "b9_M": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_M_00.mp3",
+     "ja": "増えた。",
+     "dur": 1.149
+    }
+   ],
+   "dropped": true
+  },
+  "b9_L": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_L_00.mp3",
+     "ja": "撃てるようになったっす。",
+     "dur": 1.7
+    }
+   ]
+  },
+  "b9_C": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_C_00.mp3",
+     "ja": "掴めます、それ。狙えるっすよ。",
+     "dur": 2.44
+    }
+   ],
+   "dropped": true
+  },
+  "b9_S": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_S_00.mp3",
+     "ja": "ゆっくりになった。今のうち。",
+     "dur": 2.426
+    }
+   ],
+   "dropped": true
+  },
+  "b9_P": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_P_00.mp3",
+     "ja": "1個増えた。得しましたね。",
+     "dur": 2.821
+    }
+   ]
+  },
+  "b10_bad": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b10_bad_00.mp3",
+     "ja": "あ、それ、ハズレっす。",
+     "dur": 1.9
+    },
+    {
+     "f": "react/b10_bad_01.mp3",
+     "ja": "……取らなくてよかったやつ。",
+     "dur": 3.9
+    },
+    {
+     "f": "react/b10_bad_02.mp3",
+     "ja": "ごめん、それは悪いやつ。",
+     "dur": 1.976
+    }
+   ]
+  },
+  "b10_N": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b10_N_00.mp3",
+     "ja": "縮みましたね。",
+     "dur": 1.158
+    }
+   ],
+   "dropped": true
+  },
+  "b10_F": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b10_F_00.mp3",
+     "ja": "速い速い。",
+     "dur": 1.713
+    }
+   ],
+   "dropped": true
+  },
+  "b10_R": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b10_R_00.mp3",
+     "ja": "左右、逆っす。逆。",
+     "dur": 2.286
+    }
+   ],
+   "dropped": true
+  },
+  "b10_T": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b10_T_00.mp3",
+     "ja": "小っさ。",
+     "dur": 1.344
+    }
+   ],
+   "dropped": true
+  },
+  "b11_60": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b11_60_00.mp3",
+     "ja": "残り1分っす。",
+     "dur": 1.56
+    },
+    {
+     "f": "react/b11_60_01.mp3",
+     "ja": "1分。まだいける。",
+     "dur": 2.006
+    }
+   ]
+  },
+  "b11_30": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b11_30_00.mp3",
+     "ja": "30秒。",
+     "dur": 1.38
+    },
+    {
+     "f": "react/b11_30_01.mp3",
+     "ja": "そろそろっすよ。",
+     "dur": 1.242
+    }
+   ],
+   "dropped": true
+  },
+  "b11_10": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b11_10_00.mp3",
+     "ja": "ラスト10秒。",
+     "dur": 1.88
+    },
+    {
+     "f": "react/b11_10_01.mp3",
+     "ja": "……いけ。",
+     "dur": 1.96
+    }
+   ]
+  },
+  "b12_stuck": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b12_stuck_00.mp3",
+     "ja": "落ち着いていいっす。時間はある。",
+     "dur": 3.06
+    },
+    {
+     "f": "react/b12_stuck_01.mp3",
+     "ja": "壁、削ってからでもいいっすよ。",
+     "dur": 2.28
+    },
+    {
+     "f": "react/b12_stuck_02.mp3",
+     "ja": "焦らないで。",
+     "dur": 1.12
+    },
+    {
+     "f": "react/b12_stuck_03.mp3",
+     "ja": "端っこ、狙ってみます?",
+     "dur": 2.511
+    }
+   ]
+  },
+  "g1_you": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g1_you_00.mp3",
+     "ja": "お、当てた。",
+     "dur": 1.84
+    },
+    {
+     "f": "react/g1_you_01.mp3",
+     "ja": "1点。",
+     "dur": 0.74
+    },
+    {
+     "f": "react/g1_you_02.mp3",
+     "ja": "入りましたね。",
+     "dur": 1.2
+    },
+    {
+     "f": "react/g1_you_03.mp3",
+     "ja": "いいとこ突いた。",
+     "dur": 1.78
+    },
+    {
+     "f": "react/g1_you_04.mp3",
+     "ja": "今の、避けられないっすね。",
+     "dur": 2.0
+    },
+    {
+     "f": "react/g1_you_05.mp3",
+     "ja": "うまい。",
+     "dur": 0.78
+    },
+    {
+     "f": "react/g1_you_06.mp3",
+     "ja": "そう、そこで動かす。",
+     "dur": 2.18
+    },
+    {
+     "f": "react/g1_you_07.mp3",
+     "ja": "読まれてなかったっすね。",
+     "dur": 1.64
+    }
+   ]
+  },
+  "g2_them": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g2_them_00.mp3",
+     "ja": "通った。",
+     "dur": 1.3
+    },
+    {
+     "f": "react/g2_them_01.mp3",
+     "ja": "……避けるなあ。",
+     "dur": 3.6
+    },
+    {
+     "f": "react/g2_them_02.mp3",
+     "ja": "さすがっすね。",
+     "dur": 1.779
+    },
+    {
+     "f": "react/g2_them_03.mp3",
+     "ja": "今の、通すんだ。",
+     "dur": 1.74
+    },
+    {
+     "f": "react/g2_them_04.mp3",
+     "ja": "HARIBOWに1点。",
+     "dur": 2.06
+    },
+    {
+     "f": "react/g2_them_05.mp3",
+     "ja": "やりますね、あっちも。",
+     "dur": 2.1
+    },
+    {
+     "f": "react/g2_them_06.mp3",
+     "ja": "避けられた。",
+     "dur": 1.164
+    }
+   ]
+  },
+  "g3_youRun": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g3_youRun_00.mp3",
+     "ja": "2連続。",
+     "dur": 1.32
+    },
+    {
+     "f": "react/g3_youRun_01.mp3",
+     "ja": "乗ってきた。",
+     "dur": 1.12
+    },
+    {
+     "f": "react/g3_youRun_02.mp3",
+     "ja": "……ちょっと強くないっすか。",
+     "dur": 2.911
+    }
+   ]
+  },
+  "g4_themRun": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g4_themRun_00.mp3",
+     "ja": "止まんないっすね、あの人。",
+     "dur": 1.98
+    },
+    {
+     "f": "react/g4_themRun_01.mp3",
+     "ja": "連続で通された。",
+     "dur": 1.4
+    },
+    {
+     "f": "react/g4_themRun_02.mp3",
+     "ja": "そろそろ当てましょ。",
+     "dur": 1.333
+    }
+   ]
+  },
+  "g5_close": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g5_close_00.mp3",
+     "ja": "惜しい。",
+     "dur": 1.5
+    },
+    {
+     "f": "react/g5_close_01.mp3",
+     "ja": "今の、ギリギリっす。",
+     "dur": 2.039
+    },
+    {
+     "f": "react/g5_close_02.mp3",
+     "ja": "あと半歩。",
+     "dur": 1.355
+    }
+   ]
+  },
+  "g6_mpYou": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g6_mpYou_00.mp3",
+     "ja": "あと1点。決めちゃってください。",
+     "dur": 2.84
+    },
+    {
+     "f": "react/g6_mpYou_01.mp3",
+     "ja": "リーチっす。",
+     "dur": 1.47
+    }
+   ]
+  },
+  "g6_mpThem": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g6_mpThem_00.mp3",
+     "ja": "……やばい、あと1本。",
+     "dur": 2.54
+    },
+    {
+     "f": "react/g6_mpThem_01.mp3",
+     "ja": "後がないっすよ。",
+     "dur": 1.597
+    }
+   ]
+  },
+  "g7_winYou": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g7_winYou_00.mp3",
+     "ja": "勝った。客席の勝ちっす。……いや、強すぎ。",
+     "dur": 6.091
+    }
+   ]
+  },
+  "g7_winThem": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g7_winThem_00.mp3",
+     "ja": "HARIBOWの勝ち。……まあ、そりゃそうか。ありがとうございました。",
+     "dur": 6.933
+    }
+   ]
+  },
+  "g7_draw": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/g7_draw_00.mp3",
+     "ja": "……引き分け。そんなことある?",
+     "dur": 3.092
+    }
+   ]
+  },
+  "c_crash": {
+   "ordered": true,
+   "clips": [
+    {
+     "f": "react/c_crash_00.mp3",
+     "ja": "え、ちょっと待ってくださいね。",
+     "dur": 2.4
+    },
+    {
+     "f": "react/c_crash_01.mp3",
+     "ja": "壊れちゃったかも?",
+     "dur": 2.361
+    }
+   ]
+  },
+  "b9_wow": {
+   "ordered": false,
+   "clips": [
+    {
+     "f": "react/b9_wow_00.mp3",
+     "ja": "……お、いいね。",
+     "dur": 1.11,
+     "from": "rules_b_12"
+    },
+    {
+     "f": "react/b9_wow_01.mp3",
+     "ja": "すごくない?",
+     "dur": 1.19,
+     "from": "result_clear"
+    },
+    {
+     "f": "react/b9_wow_02.mp3",
+     "ja": "……マジか。",
+     "dur": 1.73,
+     "from": "result_clear"
+    },
+    {
+     "f": "react/b9_wow_03.mp3",
+     "ja": "うわ。",
+     "dur": 0.79,
+     "from": "result_clear"
+    },
+    {
+     "f": "react/b9_wow_04.mp3",
+     "ja": "……っはー。",
+     "dur": 0.73,
+     "from": "afw"
+    },
+    {
+     "f": "react/b9_wow_05.mp3",
+     "ja": "今の見ました?",
+     "dur": 1.57,
+     "from": "afw"
+    }
+   ],
+   "note": "採用済みの本編から切り出した（合成し直していない）"
+  }
+ },
+ "note": "gen_reactions.py が作る。台本の正典は voice/lines_JP_reactions.md"
+}
