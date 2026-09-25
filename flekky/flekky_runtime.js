@@ -328,6 +328,8 @@ const P={
      ・exitY  … **沈んで消える**時の深さ。坂田「まだ頭が見えてる」→ 3倍にした
      1つの数字で両方をやると、どちらかが必ず破綻する（実際にした）。 */
   enterMode:1, enterY:2.4, exitY:7.2,
+  backHead:1,          // 1=裏側を後頭部（黒髪＋キャップ）にする／0=元どおり裏にも顔（2026-09-25）
+  posRate:0.9,         // pos イベントへ寄っていく速さ（小さいほどゆっくり漂う）
   subSize:1.0,         // 字幕の大きさ
   lineW:2.0, glow:1.0, rim:0.22, diff:0.52, halo:0.18,
 };
@@ -469,6 +471,7 @@ function resetState(){
     glow:0, glowT:0,
     gest:null,                             // {kind,t0}
     scale:1, scaleT:1, fx:0, fy:0, gaze:0,
+    px:0,py:0,pz:0, pxT:0,pyT:0,pzT:0,   // 画面の中の居場所（pos イベント・2026-09-24）
   });
 }
 resetState();
@@ -482,7 +485,9 @@ function bakeLip(buf){
   let peak=1e-6;
   const rms=new Float32Array(n), zcr=new Float32Array(n);
   for(let f=0;f<n;f++){
-    const c=Math.round(f*STEP*sr), a=Math.max(0,c-win>>1), b=Math.min(ch.length,a+win);
+    /* ★2026-09-24 修正：旧 `c-win>>1` は (c-win)>>1 と解釈され、**半分の時刻の音**で口を動かしていた
+       （10秒の所で5秒の所の声に合わせて口が開く＝黙っているのにパクパク。坂田指摘）。 */
+    const c=Math.round(f*STEP*sr), a=Math.max(0,c-(win>>1)), b=Math.min(ch.length,a+win);
     let s=0,z=0,prev=0;
     for(let i=a;i<b;i++){const v=ch[i]; s+=v*v; if(i>a&&((v<0)!==(prev<0)))z++; prev=v;}
     const m=Math.sqrt(s/Math.max(1,b-a));
@@ -555,6 +560,10 @@ function applyEvent(e){
     case 'expr':   S.exprT=e.v; break;
     case 'glow':   S.glowT=e.v; break;
     case 'scale':  S.scaleT=e.v; break;
+    /* 画面の中を動く（2026-09-24 坂田「もっと画面内を動き回っていい。奥に行って小さく見えたり」）。
+       z は奥が負＝透視で小さく見える。**出ていない間はその場へ直接置く**（出る瞬間に飛んでこないように） */
+    case 'pos':    S.pxT=e.x||0; S.pyT=e.y||0; S.pzT=e.z||0;
+                   if(S.appear<0.02){ S.px=S.pxT; S.py=S.pyT; S.pz=S.pzT; } break;
   }
 }
 
@@ -567,6 +576,8 @@ function stepSim(){
   S.expr  +=(S.exprT  -S.expr  )*k(6.5);
   S.glow  +=(S.glowT  -S.glow  )*k(S.glowT>S.glow?11:3.0);
   S.scale +=(S.scaleT -S.scale )*k(4.0);
+  /* 居場所はゆっくり追う＝漂うように移る（速いと瞬間移動に見える） */
+  S.px+=(S.pxT-S.px)*k(P.posRate); S.py+=(S.pyT-S.py)*k(P.posRate); S.pz+=(S.pzT-S.pz)*k(P.posRate);
   const [gy,gp,gr]=gestPose(S.gest,t);
   const id=idlePose(t);
   S.yaw  +=((S.yawT  +gy+id.yaw  )-S.yaw  )*k(7.0);
@@ -662,16 +673,16 @@ const FK_CAM=new Float32Array([0,0,5.4]);
 const FLEK=prog(`#version 300 es
 in vec3 aPos; in vec3 aNorm; in vec2 aUV;
 uniform mat4 uMVP, uModel; uniform mat3 uN;
-out vec3 vN, vW; out vec2 vUV;
-void main(){ vN=normalize(uN*aNorm); vW=(uModel*vec4(aPos,1)).xyz; vUV=aUV;
+out vec3 vN, vW; out vec2 vUV; out float vZ;
+void main(){ vN=normalize(uN*aNorm); vW=(uModel*vec4(aPos,1)).xyz; vUV=aUV; vZ=aPos.z;
   gl_Position=uMVP*vec4(aPos,1); }`,
 `#version 300 es
 precision highp float;
-in vec3 vN, vW; in vec2 vUV; out vec4 o;
+in vec3 vN, vW; in vec2 vUV; in float vZ; out vec4 o;
 uniform sampler2D uTex;
 uniform vec3 uEye, uLight, uLineCol;
 uniform float uRim, uAmb, uDiff, uGlow, uLineMix, uLineGlow, uLineCut;
-uniform float uAppear, uTime, uDissolve;
+uniform float uAppear, uTime, uDissolve, uBack;
 
 /* 値ノイズ。溶解の模様に使う。時刻はシミュレーションの時刻なので巻き戻しても同じ */
 float h21(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
@@ -710,6 +721,19 @@ void main(){
   float line=1.0-smoothstep(uLineCut*0.45,uLineCut,lum);
   vec3 lineLit=mix(base,uLineCol*uLineGlow,uLineMix);
   vec3 c=mix(base,lineLit,line);
+  /* ★裏側＝後頭部（2026-09-25 坂田「黒い後頭部」）。元は表の絵をそのまま裏にも貼っていて、後ろから見ると顔があった。
+     キャップの色の所はキャップの色だけ（文字・線は出さない）、それ以外は黒い髪。
+     紗幕は黒を映せないので、後ろを向くと髪は見えずキャップだけ残る（坂田が「黒い後頭部」を選択） */
+  if(uBack>0.5 && vZ<0.0){
+    /* キャップかどうかは**ぼかした絵**で見る。そのまま見ると帽子の文字（黒）が髪扱いになって、裏返しの文字が浮く */
+    vec4 tb=textureLod(uTex,vUV,4.0);   /* 見る角度でぼけ具合が変わらないよう LOD を固定（bias だと横向きで全体平均＝水色になった） */
+    bool cap = tb.b > tb.r + 0.06;
+    vec3 capCol = vec3(0.36,0.80,0.84);
+    vec3 hair = vec3(0.035,0.032,0.03);
+    vec3 bc = (cap ? capCol : hair)*(uAmb+uDiff*d);
+    /* 縁の光は輪郭だけに絞る（強いと横向きで面ごと水色に光った） */
+    c = bc;   /* 縁を光らせると真横で面ごと青灰色になった（板状の立体なので裏面全体が浅い角度になる）→ 光らせない */
+  }
   c+=uLineCol*burn*2.6;                    /* 溶け際の光 */
   o=vec4(c*uGlow,1.0);
 }`);
@@ -720,16 +744,17 @@ void main(){
 const PUPIL=prog(`#version 300 es
 in vec3 aPos; in vec3 aNorm; in vec2 aUV;
 uniform mat4 uMVP, uModel; uniform mat3 uN;
-out vec3 vN, vW; out vec2 vUV;
-void main(){ vN=normalize(uN*aNorm); vW=(uModel*vec4(aPos,1)).xyz; vUV=aUV;
+out vec3 vN, vW; out vec2 vUV; out float vZ;
+void main(){ vN=normalize(uN*aNorm); vW=(uModel*vec4(aPos,1)).xyz; vUV=aUV; vZ=aPos.z;
   gl_Position=uMVP*vec4(aPos,1); }`,
 `#version 300 es
 precision highp float;
-in vec3 vN, vW; in vec2 vUV; out vec4 o;
+in vec3 vN, vW; in vec2 vUV; in float vZ; out vec4 o;
 uniform sampler2D uTex;
 uniform vec3 uEye, uLight, uLineCol;
-uniform float uRim, uAmb, uDiff, uGlow, uLineMix, uLineGlow, uLineCut, uOff, uFade;
+uniform float uRim, uAmb, uDiff, uGlow, uLineMix, uLineGlow, uLineCut, uOff, uFade, uBack;
 void main(){
+  if(uBack>0.5 && vZ<0.0) discard;         /* 後頭部に黒目を出さない */
   vec4 t=texture(uTex, vUV - vec2(uOff,0.0));
   if(t.a<0.5) discard;
   vec3 N=normalize(vN), V=normalize(uEye-vW), L=normalize(uLight);
@@ -862,7 +887,7 @@ function render(){
   const view=M4.lookAt(FK_CAM,[0,0,0],[0,1,0]);
   const vp=M4.mul(proj,view);
   const s=S.scale*(1+Math.max(S.expr,0)*0.05);   // 出入りは溶解で見せるので縮小はしない
-  const model=M4.mul(M4.trans(S.fx,S.fy,0),
+  const model=M4.mul(M4.trans(S.fx+S.px,S.fy+S.py,S.pz),
                 M4.mul(M4.mul(M4.rotZ(S.roll),M4.mul(M4.rotY(S.yaw),M4.rotX(S.pitch))),
                        M4.scale(s,s,s)));
   const mvp=M4.mul(vp,model);
@@ -894,6 +919,7 @@ function render(){
     gl.uniform1f(FLEK.u.uAppear,S.appear);
     gl.uniform1f(FLEK.u.uTime,S.t);
     gl.uniform1f(FLEK.u.uDissolve, P.enterMode ? 0.0 : P.dissolve);   // ★せり上がりの時は溶解を使わない
+    gl.uniform1f(FLEK.u.uBack, P.backHead);
     head.draw();
     /* 黒目（本体と同じ形を、瞳テクスチャでずらして重ねる） */
     if(PUPTEX){
@@ -912,6 +938,7 @@ function render(){
       gl.uniform1f(PUPIL.u.uLineCut,P.lineCut);
       gl.uniform1f(PUPIL.u.uOff,S.gaze);
       gl.uniform1f(PUPIL.u.uFade,smoothstep(0.55,0.9,S.appear));
+      gl.uniform1f(PUPIL.u.uBack, P.backHead);
       gl.depthFunc(gl.LEQUAL); head.draw(); gl.depthFunc(gl.LESS);
     }
     /* 口 */

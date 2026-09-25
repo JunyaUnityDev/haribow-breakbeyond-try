@@ -1313,6 +1313,26 @@ const Audio_ = {
     this.v({freq:1500, dur:0.05, type:'square', vol:0.16, cut:7000, pan:this.panFor(x)});
     this.n({dur:0.06, vol:0.12, cut:4200, cutEnd:1200, pan:this.panFor(x)});
   },
+  /* ★演者に当たった音（2026-09-25 坂田「演者に当たった時のエフェクトや効果音など欲しい」）。
+     いままでは玉を落とした時と同じ `die()` を流用していた。
+     **この演目でいちばん大きい瞬間**なので、専用に組む。
+       ・腹に来る重低音（下へ落ちる）＝当たった質量
+       ・金属がひしゃげる音（低い帯のノイズ）
+       ・その上に短い高域の破裂＝バーが割れた粒
+     鳴らす場所は穴の位置で振る（どこで当たったか耳で分かる）。 */
+  gateHit(x){
+    if(!this.on || !this.ctx) return;
+    const p = this.panFor(x), t = this.ctx.currentTime;
+    if(Samples.play('gate_hit', {pan:p, send:.45})){ this.duckBefore(0.05, 0.42, 0.55); return; }
+    this.sub({ t, freq:96, to:26, dur:1.05, vol:1.0, atk:0.006 });          // 腹に来る芯
+    this.n({ t, dur:0.42, vol:0.34, cut:420, cutEnd:90, curve:1.5, pan:p, send:.40 });   // ひしゃげ
+    this.n({ t, dur:0.12, vol:0.26, cut:2600, cutEnd:7200, curve:2.4, pan:p, send:.30 });// 割れた粒
+    this.v({ t, freq:210, dur:0.30, type:'sawtooth', vol:0.30, slide:58, q:5,
+             cut:1800, cutEnd:200, pan:p, send:.35 });
+    this.v({ t: t+0.045, freq:1180, dur:0.09, type:'square', vol:0.12,
+             cut:6000, pan:p, send:.25 });
+    this.duckBefore(0.05, 0.42, 0.55);
+  },
   gatePass(x){
     if(Samples.play('gate_pass',{pan:this.panFor(x),send:.40})) return;
     this.n({dur:0.32, vol:0.16, cut:600, cutEnd:5200, curve:1.2, pan:this.panFor(x), send:.40});
@@ -2003,6 +2023,28 @@ const ResultVoice = {
    段4の「白く脈打つ」が効かなくなる（慣れる）。分布に合わせて引き直した。
    段1は低く＝確変にはすぐ入る。段4(100)は中央値109にほぼ届く高さ＝終盤の上澄みだけ */
 /* 節目の音型。BREAK の段・GATE の段・CRASH の入口で毎回同じものを鳴らす */
+/* ★曲の段の下限（2026-09-22/25）。
+   コンボで上下する段とは別に、「ここぞ」の場面では**下がらない確変**にしておきたい。
+     ・ブロック崩し … 壁が全部落ちてコアだけになった時
+     ・GATE        … どちらかが6点（マッチポイント）
+   コンボ由来の段がこれを下回っても、この下限までは必ず上げる。 */
+function musicTier(t){
+  const floor = (G && G.tierFloor) || 0;
+  const n = Math.max(t, floor);
+  G.comboTier = n; Music.setTier(n);
+  return n;
+}
+function setTierFloor(n, why){
+  if(!G || (G.tierFloor || 0) >= n) return;
+  G.tierFloor = n;
+  musicTier(G.comboTier || 0);
+  markTier(n);
+  Audio_.riser(4); Audio_.duckBefore(0.28, 0.5, 0.75);
+  G.fx.flash = Math.max(G.fx.flash, .26);
+  CAM.shake = Math.max(CAM.shake, .7);
+  if(why) toast(why);
+}
+
 function markTier(t){
   if(t <= 0) return;
   Audio_.motif(0.55 + 0.12*t);
@@ -2817,6 +2859,7 @@ function newGame(){
     stage:0, lives:BREAK_LIVES, score:0, combo:0, best:0,
     act:'break', crash:null, killCount:0, opHud:!SHOW,
     comboTier:0, beatPhase:0, beatPulse:0,
+    tierFloor:0,              // ★曲の段の下限（コアだけ／マッチポイントで上がる）
     mode:'break',            // break=ブロック崩し / gate=通す
     gate:null,
     balls:[], powerups:[], lasers:[],
@@ -2849,7 +2892,7 @@ function newGate(){
     auto:!SHOW,                       // 判定を自動でやる。?show では最初から人（袖の人が X を押す）
     ghostLane:2, ghostX:laneX(2), ghostDelay:0, ghostSeen:2
   };
-  G.combo = 0; G.comboTier = 0;
+  G.combo = 0; G.comboTier = 0; G.tierFloor = 0;   // ★曲の下限も戻す
   Music.start();                      // GATEでも曲を鳴らす（旧仕様は無音だった）
 }
 
@@ -3002,6 +3045,13 @@ function update(dt){
     let n = 0;
     for(const b of G.bricks) if(!b.dead && !b.solid) n++;
     G.aliveBricks = n;
+    /* ★壁が全部落ちて、残りがコアだけ（2026-09-25 坂田
+       「残りがコアだけになった時 確変みたいな曲にしたいな」）。
+       ここからは**コアを叩くだけ**の時間になるので、曲を確変に上げて落とさない。 */
+    if(n === 0 && G.core && !G.cleared && G.state === 'play' && !G.tierFloor){
+      setTierFloor(4, '\u30b3\u30a2\u3060\u3051\u306b\u306a\u3063\u305f');
+      React.say('b3_expose', 3);
+    }
   }
   if(G.bannerT > 0) G.bannerT -= dt;
   if(G.msgT > 0)    G.msgT -= dt;
@@ -3667,7 +3717,7 @@ function breakCombo(){
   const had = G.comboTier > 0;
   G.combo = Math.floor(G.combo * 0.60); G.comboTier = comboTier(G.combo);
   if(had){
-    Music.setTier(G.comboTier); Audio_.powerDown();   // 曲は止めない。段が落ちるだけ
+    musicTier(G.comboTier); Audio_.powerDown();       // 曲は止めない。段が落ちるだけ（下限は割らない）
     G.fx.comboBreak = 1;
     G.fx.shake = Math.max(G.fx.shake, .30);
   } else Music.tier = 0;
@@ -3680,7 +3730,7 @@ function bumpCombo(){
   G.best = Math.max(G.best, G.combo);
   const t = comboTier(G.combo);
   if(t !== G.comboTier){
-    G.comboTier = t; Music.setTier(t);
+    musicTier(t);
     if(t > 0){
       React.say('b6_tier' + t, 2);
       Audio_.riser(t);
@@ -4802,13 +4852,17 @@ function updateGate(dt){
   if(mp !== g.matchPoint){
     g.matchPoint = mp;
     if(mp){
-      Audio_.preroll(0.9); Audio_.duckBefore(0.25, 0.5, 0.7); markTier(3); CAM.shake = Math.max(CAM.shake, .4);
+      /* ★6点＝マッチポイント。ブロック崩しの「コアだけ」と同じ扱いにする
+         （2026-09-25 坂田「2個目のゲームの方も どっちかが6点取ったら同じ感じで」） */
+      Audio_.preroll(0.9);
+      setTierFloor(4, (g.you === GATE_MATCH-1 ? '\u3042\u3068\uff11\u70b9' : 'HARIBOW \u304c\u3042\u3068\uff11\u70b9'));
       if(!g.demo) React.say(g.you === GATE_MATCH-1 ? 'g6_mpYou' : 'g6_mpThem', 3);
     }
   }
 
   /* ★3・2・1（2026-09-22 坂田「始まる前に3、2、1のカウントダウン欲しいかも」）。
      数えている間も狙いは動かせる。落とせないだけ。 */
+  if(g.hitFlash > 0) g.hitFlash = Math.max(0, g.hitFlash - dt*1.6);
   if(g.count > 0){
     g.count -= dt;
     const n = Math.max(0, Math.ceil(g.count));
@@ -4941,22 +4995,40 @@ function updateGate(dt){
       if(missed){
         g.hits++; g.you++;                 // ★客に1点
         // ★客の連続ヒット。伸びるほど曲が上がり、バーが速くなる
-        HitStop.hit(0.085);               // 演者に当たった＝この演目の見せ場
-        gateShatter(b, 'hit');            // ★当たった＝穴の位置で爆ぜる
+        /* ★当たった瞬間の見せ場（2026-09-25）。
+           止める・光る・揺れる・散る を同じコマに重ねて「当たった」を体で分からせる。 */
+        HitStop.hit(0.16);                // 長めに止める＝衝撃が伸びる
+        gateShatter(b, 'hit');            // 穴の位置で爆ぜる
+        {
+          const hx = b.drawX, hy = GATE_PERF_Y;
+          // 衝撃の輪。当たった高さから外へ広がる
+          FX.ring({x:hx-30, y:hy-30, w:60, h:60}, C.terracotta);
+          FX.ring({x:hx-30, y:hy-30, w:60, h:60}, '#f0ece0');
+          // 火花。上下に叩き割られた形にする
+          for(let i=0;i<46;i++) sparkAt(hx + (Math.random()-.5)*GATE_LW*0.9,
+                                        hy + (Math.random()-.5)*120,
+                                        i%3 ? C.terracotta : '#f0ece0', 1.6);
+          // 床に落ちる粉
+          for(let i=0;i<18;i++) sparkAt(hx + (Math.random()-.5)*GATE_LW*1.4,
+                                        GATE_PERF_Y + 120 + Math.random()*60, C.dim, 0.8);
+          G.fx.flash = Math.max(G.fx.flash, .34);
+          G.gate.hitFlash = 1;             // 画面の縁が赤く脈打つ（drawGate で描く）
+          G.gate.hitX = hx;
+        }
         g.dodge = 0;                      // 演者の連続回避が切れる
         g.streak++; g.best = Math.max(g.best, g.streak);
-        G.combo += 12; G.comboTier = comboTier(G.combo); Music.setTier(G.comboTier);
+        G.combo += 12; musicTier(comboTier(G.combo));
         g.speed = Math.min(GATE_VMAX, g.speed + 18);
         G.score += 800 * (1 + g.streak);
         G.fx.shake = Math.max(G.fx.shake, .7);
-        Audio_.die();
+        Audio_.gateHit(b.drawX);
         if(!g.demo && !React.say(g.streak >= 2 ? 'g3_youRun' : 'g1_you', 1)) React.say('g1_you', 1);
       } else {
         g.cleared++; g.them++;             // ★メンバーに1点
         g.dodge++; g.dodgeBest = Math.max(g.dodgeBest, g.dodge);
         // 通されたら客の連続は切れる。曲も落ちる
         if(g.streak > 0){ g.streak = 0; G.combo = Math.floor(G.combo*0.45);
-                          G.comboTier = comboTier(G.combo); Music.setTier(G.comboTier); }
+                          musicTier(comboTier(G.combo)); }
         const mult = Math.min(8, 1 + Math.floor(G.combo/3));
         G.score += 500 * mult;
         G.fx.flash = Math.max(G.fx.flash, .16);
@@ -5270,6 +5342,28 @@ function drawGate(){
 
   /* ★段（3幕構成）の幕は廃止（2026-09-20）。壁は点が入るたび少しずつ速くなる。
      間を置いて仕切り直すより、止まらずに7点まで駆け抜けた方が短くて熱い */
+
+  /* ★当たった直後、画面の縁が赤く脈打つ（2026-09-25）。
+     全画面を赤くすると盤面が読めなくなるので、**縁だけ**。
+     紗幕では周囲が滲んで、当たった側の壁が鳴ったように見える。 */
+  if(g.hitFlash > 0){
+    const a = g.hitFlash * g.hitFlash;
+    ctx.save();
+    /* 中心は空けておく。ここを塗ると**盤面が読めなくなる**（1,200人が見るので致命的） */
+    const eg = ctx.createRadialGradient(W/2, H*0.62, H*0.46, W/2, H*0.62, H*0.95);
+    eg.addColorStop(0, 'rgba(189,46,30,0)');
+    eg.addColorStop(1, `rgba(189,46,30,${0.44*a})`);
+    ctx.fillStyle = eg; ctx.fillRect(0,0,W,H);
+    // 当たった列だけ、床から立ち上がる残光
+    if(g.hitX != null){
+      const lg = ctx.createLinearGradient(0, GATE_FLOOR_Y, 0, GATE_PERF_Y-180);
+      lg.addColorStop(0, `rgba(189,46,30,${0.46*a})`);
+      lg.addColorStop(1, 'rgba(189,46,30,0)');
+      ctx.fillStyle = lg;
+      ctx.fillRect(g.hitX - GATE_LW*0.5, GATE_PERF_Y-180, GATE_LW, GATE_FLOOR_Y-(GATE_PERF_Y-180));
+    }
+    ctx.restore();
+  }
 
   if(g.intro < GATE_INTRO){ drawGateIntro(g.intro / GATE_INTRO); }
 
